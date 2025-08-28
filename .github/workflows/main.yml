@@ -3,6 +3,9 @@ name: Glog.AI Scan
 on: 
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   glog-scan-job:
     runs-on: ubuntu-latest
