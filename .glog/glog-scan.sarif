@@ -12,28 +12,6 @@
           "informationUri": "https://www.glog.ai",
           "rules": [
             {
-              "id": "78935dac-7999-370f-871a-537b887d7db3",
-              "name": "Validate user input before using in shell commands with imported child_process module.",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn JavaScript, the `child_process` module provides the ability to spawn child processes in a manner that is similar, but not identical, to popen(3). This can be particularly dangerous if you're executing shell commands that include unvalidated user input. This can lead to command injection vulnerabilities where an attacker can inject arbitrary commands to be executed on the server.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always validate and sanitize user input before using it in shell commands. This can be done by using regular expressions, whitelist input validation, or by using parameterized functions. Avoid using shell commands where possible and use safer alternatives like `child_process.execFile()` or `child_process.spawn()` which do not spawn a shell by default.\n\n## Source Code Fix Recommendation\n\nHere's an example of how you can fix this vulnerability:\n\n```javascript\nconst execFile = require('child_process').execFile;\n\nlet user_input = \"...\"; // User input\n\n// Validate user input here\n\nexecFile('command', [user_input], (error, stdout, stderr) => {\n  if (error) {\n    throw error;\n  }\n  console.log(stdout);\n});\n```\n\nIn this example, `execFile()` is used instead of `exec()`. The command to be executed is separated from the arguments, which prevents shell metacharacters (like semicolons and ampersands) from being interpreted.\n\n## Library Dependencies\n\nThe `child_process` module is a core module in Node.js, so no additional library dependencies are required.\n\n## References\n\n- [OWASP Command Injection](https://owasp.org/www-community/attacks/Command_Injection)\n- [CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')](https://cwe.mitre.org/data/definitions/78.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-78",
-                    "url": "https://cwe.mitre.org/data/definitions/78.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-78"
-                ]
-              }
-            },
-            {
               "id": "805169d8-d4bf-3bfd-a3aa-66ff30935d80",
               "name": "High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification",
               "helpUri": "https://www.glog.ai/",
@@ -56,46 +34,68 @@
               }
             },
             {
-              "id": "f9220330-3239-30f0-bb86-58261d761080",
-              "name": "\"Libxml library's `noent` attribute set to `true` can lead to XXE vulnerabilities; recommended to set `noent` to `false` for protection.\"",
+              "id": "78935dac-7999-370f-871a-537b887d7db3",
+              "name": "Validate user input before using in shell commands with imported child_process module.",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe `noent` attribute in the `libxmljs` library in JavaScript is used to substitute entities in an XML document. When this attribute is set to `true`, it can lead to XML External Entity (XXE) vulnerabilities. XXE vulnerabilities occur when an application processing XML input allows the inclusion of dynamic external entities. This can lead to the disclosure of confidential data, denial of service, server-side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to disable the `noent` attribute by setting it to `false`. This will prevent the parser from substituting entities with their values, thus preventing XXE attacks.\n\n## Source Code Fix Recommendation\n\nHere is how you can fix the vulnerability in the provided code:\n\n```javascript\nvar products = libxmljs.parseXmlString(req.files.products.data.toString('utf8'), {noent:false,noblanks:true})\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies to execute properly:\n\n- `libxmljs`: A library for parsing and serializing XML documents.\n\n## References\n\n- [OWASP XXE Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)\n- [CWE-611: Improper Restriction of XML External Entity Reference ('XXE')](https://cwe.mitre.org/data/definitions/611.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\nIn JavaScript, the `child_process` module provides the ability to spawn child processes in a manner that is similar, but not identical, to popen(3). This can be particularly dangerous if you're executing shell commands that include unvalidated user input. This can lead to command injection vulnerabilities where an attacker can inject arbitrary commands to be executed on the server.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always validate and sanitize user input before using it in shell commands. This can be done by using regular expressions, whitelist input validation, or by using parameterized functions. Avoid using shell commands where possible and use safer alternatives like `child_process.execFile()` or `child_process.spawn()` which do not spawn a shell by default.\n\n## Source Code Fix Recommendation\n\nHere's an example of how you can fix this vulnerability:\n\n```javascript\nconst execFile = require('child_process').execFile;\n\nlet user_input = \"...\"; // User input\n\n// Validate user input here\n\nexecFile('command', [user_input], (error, stdout, stderr) => {\n  if (error) {\n    throw error;\n  }\n  console.log(stdout);\n});\n```\n\nIn this example, `execFile()` is used instead of `exec()`. The command to be executed is separated from the arguments, which prevents shell metacharacters (like semicolons and ampersands) from being interpreted.\n\n## Library Dependencies\n\nThe `child_process` module is a core module in Node.js, so no additional library dependencies are required.\n\n## References\n\n- [OWASP Command Injection](https://owasp.org/www-community/attacks/Command_Injection)\n- [CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')](https://cwe.mitre.org/data/definitions/78.html)"
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-611",
-                    "url": "https://cwe.mitre.org/data/definitions/611.html"
+                    "id": "CWE-78",
+                    "url": "https://cwe.mitre.org/data/definitions/78.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-611"
+                  "CWE-78"
                 ]
               }
             },
             {
-              "id": "fd7234c9-f60f-32b7-86c2-9d3be0e45876",
-              "name": "\"XML Parsing Library Found: Disable External Entity Resolution to Avoid XXE Attacks\"",
+              "id": "21ea3123-3174-3d79-b784-74a27a5252e9",
+              "name": "\"Postgresql Server Vulnerability to MITN Attacks due to Disabled TLS and Sequelize's Non-Enforcement of TLS\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nXML External Entity (XXE) attacks occur when an XML parser processes XML input that contains a reference to an external entity. This can lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.\n\nIn JavaScript, if you're using the `libxmljs` library to parse XML data, you might be vulnerable to XXE attacks if you don't disable the resolution of external entities.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should disable the resolution of external entities in the XML parser. This can be done by setting the `noent` option to `false` when parsing XML data.\n\n## Source Code Fix Recommendation\n\nHere's how you can disable the resolution of external entities in `libxmljs`:\n\n```javascript\nvar libxmljs = require(\"libxmljs\");\n\nvar xml = \"...\"; // your XML data\n\nvar xmlDoc = libxmljs.parseXmlString(xml, {noent: false});\n```\n\nIn this code, the `noent` option is set to `false`, which disables the resolution of external entities.\n\n## Library Dependencies\n\nThe only library dependency required by the code example is `libxmljs`.\n\n## References\n\n- [OWASP XXE Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)\n- [CWE-611: Improper Restriction of XML External Entity Reference ('XXE')](https://cwe.mitre.org/data/definitions/611.html)"
+                "markdown": "## Description\n\nThe vulnerability arises when a PostgreSQL server is configured to accept connections without Transport Layer Security (TLS), and Sequelize, a promise-based Node.js Object-Relational Mapping (ORM) for SQL databases, does not enforce TLS. This can expose the server to Man-In-The-Middle (MITM) attacks where an attacker can intercept and possibly alter the communication between the client and the server.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Enable and enforce TLS on your PostgreSQL server. This will encrypt the communication between the client and the server, making it difficult for an attacker to read or modify the data.\n\n2. Configure Sequelize to use SSL/TLS for database connections. This will ensure that Sequelize only communicates with the server over a secure connection.\n\n## Source Code Fix Recommendation\n\nYou can enforce SSL/TLS in Sequelize by adding the `dialectOptions` property to the configuration object:\n\n```javascript\nmodule.exports = {\n  username: process.env.MYSQL_USER,\n  password: process.env.MYSQL_PASSWORD,\n  database: process.env.MYSQL_DATABASE,\n  host: process.env.MYSQL_HOST || 'mysql-db',\n  port: process.env.MYSQL_PORT || 3306,\n  dialect: 'mysql',\n  dialectOptions: {\n    ssl: {\n      require: true,\n      rejectUnauthorized: false\n    }\n  }\n}\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- `dotenv`: To load environment variables from a `.env` file.\n- `sequelize`: To interact with the MySQL database.\n\n## References\n\n- [OWASP Transport Layer Protection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)\n- [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)"
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-611",
-                    "url": "https://cwe.mitre.org/data/definitions/611.html"
+                    "id": "CWE-319",
+                    "url": "https://cwe.mitre.org/data/definitions/319.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-611"
+                  "CWE-319"
+                ]
+              }
+            },
+            {
+              "id": "055908f0-60ec-34e2-99d7-df61704e3569",
+              "name": "Potential Path Traversal Vulnerability Detected in `path.join` or `path.resolve` Function Due to Unsanitized User Input",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nA potential Path Traversal vulnerability has been detected in the `path.join` or `path.resolve` function due to unsanitized user input. This vulnerability, also known as directory traversal, is a type of application security vulnerability which allows attackers to read arbitrary files on the application's host machine, that are outside of the intended directory. In JavaScript, this vulnerability can occur when the application uses user input to construct a path to a file or directory without properly sanitizing it.\n\nIn the provided code snippet, the `sequelize.import` function is using `path.join` to construct a path to a file. If the `file` variable is user-controlled and not properly sanitized, an attacker could manipulate the path to access files outside of the intended directory.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to validate and sanitize user input. Avoid using user input to form file paths where possible. If it is necessary, ensure that the input is strictly validated. This can include checking for path traversal sequences (../ or ..\\), null bytes (%00), or newlines (%0A or %0D).\n\n## Source Code Fix Recommendation\n\n```javascript\nvar path = require('path');\nvar file = getUserInput();\n\n// Validate user input\nif (!isValidInput(file)) {\n    throw new Error('Invalid input');\n}\n\n// Sanitize user input\nfile = sanitizeInput(file);\n\nvar model = sequelize.import(path.join(__dirname, file));\n```\n\nIn this example, `isValidInput` and `sanitizeInput` are placeholder functions that you would need to implement. `isValidInput` should return a boolean indicating whether the input is valid, and `sanitizeInput` should return a sanitized version of the input.\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- `sequelize`: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n- `path`: A core Node.js module for handling and transforming file paths.\n\n## References\n\n- [OWASP Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal)\n- [CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')](https://cwe.mitre.org/data/definitions/22.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-22",
+                    "url": "https://cwe.mitre.org/data/definitions/22.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-22"
                 ]
               }
             },
@@ -123,6 +123,50 @@
                 "tags": [
                   "CWE-502",
                   "CWE-94"
+                ]
+              }
+            },
+            {
+              "id": "fd7234c9-f60f-32b7-86c2-9d3be0e45876",
+              "name": "\"XML Parsing Library Found: Disable External Entity Resolution to Avoid XXE Attacks\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nXML External Entity (XXE) attacks occur when an XML parser processes XML input that contains a reference to an external entity. This can lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.\n\nIn JavaScript, if you're using the `libxmljs` library to parse XML data, you might be vulnerable to XXE attacks if you don't disable the resolution of external entities.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should disable the resolution of external entities in the XML parser. This can be done by setting the `noent` option to `false` when parsing XML data.\n\n## Source Code Fix Recommendation\n\nHere's how you can disable the resolution of external entities in `libxmljs`:\n\n```javascript\nvar libxmljs = require(\"libxmljs\");\n\nvar xml = \"...\"; // your XML data\n\nvar xmlDoc = libxmljs.parseXmlString(xml, {noent: false});\n```\n\nIn this code, the `noent` option is set to `false`, which disables the resolution of external entities.\n\n## Library Dependencies\n\nThe only library dependency required by the code example is `libxmljs`.\n\n## References\n\n- [OWASP XXE Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)\n- [CWE-611: Improper Restriction of XML External Entity Reference ('XXE')](https://cwe.mitre.org/data/definitions/611.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-611",
+                    "url": "https://cwe.mitre.org/data/definitions/611.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-611"
+                ]
+              }
+            },
+            {
+              "id": "f9220330-3239-30f0-bb86-58261d761080",
+              "name": "\"Libxml library's `noent` attribute set to `true` can lead to XXE vulnerabilities; recommended to set `noent` to `false` for protection.\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe `noent` attribute in the `libxmljs` library in JavaScript is used to substitute entities in an XML document. When this attribute is set to `true`, it can lead to XML External Entity (XXE) vulnerabilities. XXE vulnerabilities occur when an application processing XML input allows the inclusion of dynamic external entities. This can lead to the disclosure of confidential data, denial of service, server-side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to disable the `noent` attribute by setting it to `false`. This will prevent the parser from substituting entities with their values, thus preventing XXE attacks.\n\n## Source Code Fix Recommendation\n\nHere is how you can fix the vulnerability in the provided code:\n\n```javascript\nvar products = libxmljs.parseXmlString(req.files.products.data.toString('utf8'), {noent:false,noblanks:true})\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies to execute properly:\n\n- `libxmljs`: A library for parsing and serializing XML documents.\n\n## References\n\n- [OWASP XXE Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)\n- [CWE-611: Improper Restriction of XML External Entity Reference ('XXE')](https://cwe.mitre.org/data/definitions/611.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-611",
+                    "url": "https://cwe.mitre.org/data/definitions/611.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-611"
                 ]
               }
             },
@@ -176,34 +220,34 @@
               }
             },
             {
-              "id": "055908f0-60ec-34e2-99d7-df61704e3569",
-              "name": "Potential Path Traversal Vulnerability Detected in `path.join` or `path.resolve` Function Due to Unsanitized User Input",
+              "id": "d20ba9e2-94ee-370c-9227-db01ee13e9a0",
+              "name": "Detected Hard-Coded Credential Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nA potential Path Traversal vulnerability has been detected in the `path.join` or `path.resolve` function due to unsanitized user input. This vulnerability, also known as directory traversal, is a type of application security vulnerability which allows attackers to read arbitrary files on the application's host machine, that are outside of the intended directory. In JavaScript, this vulnerability can occur when the application uses user input to construct a path to a file or directory without properly sanitizing it.\n\nIn the provided code snippet, the `sequelize.import` function is using `path.join` to construct a path to a file. If the `file` variable is user-controlled and not properly sanitized, an attacker could manipulate the path to access files outside of the intended directory.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to validate and sanitize user input. Avoid using user input to form file paths where possible. If it is necessary, ensure that the input is strictly validated. This can include checking for path traversal sequences (../ or ..\\), null bytes (%00), or newlines (%0A or %0D).\n\n## Source Code Fix Recommendation\n\n```javascript\nvar path = require('path');\nvar file = getUserInput();\n\n// Validate user input\nif (!isValidInput(file)) {\n    throw new Error('Invalid input');\n}\n\n// Sanitize user input\nfile = sanitizeInput(file);\n\nvar model = sequelize.import(path.join(__dirname, file));\n```\n\nIn this example, `isValidInput` and `sanitizeInput` are placeholder functions that you would need to implement. `isValidInput` should return a boolean indicating whether the input is valid, and `sanitizeInput` should return a sanitized version of the input.\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- `sequelize`: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n- `path`: A core Node.js module for handling and transforming file paths.\n\n## References\n\n- [OWASP Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal)\n- [CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')](https://cwe.mitre.org/data/definitions/22.html)"
+                "markdown": "## Description\n\nDetected Hard-Coded Credential Vulnerability refers to the insecure practice of embedding plaintext credentials directly within the source code. This vulnerability can lead to unauthorized access if the source code is ever exposed, as the credentials are easily readable. In JavaScript, this vulnerability can occur when sensitive data like API keys, database credentials, or in this case, a secret key for session management, are hard-coded into the application.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, sensitive data should never be hard-coded directly into the source code. Instead, use environment variables to store this data. Environment variables are a type of dynamic-named value that can affect the way running processes behave on a computer. They are part of the environment in which a process runs.\n\n## Source Code Fix Recommendation\n\nInstead of hard-coding the secret directly into the code, you should store it in an environment variable. Here's how you can do it:\n\n```javascript\nconst express = require('express');\nconst session = require('express-session');\n\nconst app = express();\n\napp.use(session({\n  secret: process.env.SESSION_SECRET,\n  resave: false,\n  saveUninitialized: true\n}));\n\n// rest of your code\n```\n\nIn this code, `process.env.SESSION_SECRET` is used to access the `SESSION_SECRET` environment variable. You can set this variable in your server's environment, or if you're using a platform like Heroku, in the settings for your application.\n\n## Library Dependencies\n\nThe code example requires the following libraries:\n\n- express\n- express-session\n\n## References\n\n- [OWASP Top 10-2017 A2-Broken Authentication](https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication)\n- [OWASP Top 10-2017 A3-Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n- [CWE-798: Use of Hard-coded Credentials](https://cwe.mitre.org/data/definitions/798.html)"
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-22",
-                    "url": "https://cwe.mitre.org/data/definitions/22.html"
+                    "id": "CWE-798",
+                    "url": "https://cwe.mitre.org/data/definitions/798.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-22"
+                  "CWE-798"
                 ]
               }
             },
             {
-              "id": "0960e248-84d3-3502-bcd0-541e59f5ebba",
-              "name": "SQL Injection Risk from Untrusted Input and Raw SQL Query Concatenation",
+              "id": "5111e466-07a0-3497-a1dd-5ad327493f27",
+              "name": "Detected SQL Injection Vulnerability from Non-Constant Query",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe code snippet provided is vulnerable to SQL Injection attacks. This is due to the use of raw SQL query concatenation with untrusted input (`req.body.login`). An attacker can manipulate the `login` parameter to alter the SQL query, potentially gaining unauthorized access to data or performing other malicious activities.\n\n## Mitigation Advice\n\nTo mitigate this risk, avoid using raw SQL queries with untrusted input. Instead, use parameterized queries or prepared statements, which can ensure that user input is always treated as literal data, not part of the SQL command.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix using Sequelize's built-in protection against SQL Injection:\n\n```javascript\nvar login = req.body.login;\ndb.User.findOne({\n    where: {\n        login: login\n    }\n}).then(user => {\n    if (user) {\n        var output = {\n            user: {\n                name: user.name,\n                id: user.id\n            }\n        }\n        res.render('app/usersearch', {\n            output: output\n        })\n    } else {\n        req.flash('warning', 'User not found')\n        res.render('app/usersearch', {\n            output: null\n        })\n    }\n}).catch(err => {\n    req.flash('danger', 'Internal Error')\n    res.render('app/usersearch', {\n        output: null\n    })\n})\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n- Express.js: A web application framework for Node.js, used for routing HTTP requests.\n- Connect-flash: A middleware for Express.js to handle flash messages.\n\n## References\n\n- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)\n- [CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')](https://cwe.mitre.org/data/definitions/89.html)"
+                "markdown": "## Description\n\n\"Detected SQL Injection Vulnerability from Non-Constant Query\" is a security vulnerability that occurs when a SQL query is built using string concatenation, and the components of the concatenation include user-supplied input. This vulnerability allows an attacker to manipulate the SQL query to execute arbitrary SQL commands.\n\nIn the provided JavaScript code, the `query` variable is passed directly to the `db.sequelize.query()` function. If the `query` variable is constructed using user-supplied input, it could lead to a SQL Injection vulnerability.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should avoid using string concatenation to build SQL queries. Instead, use parameterized queries or prepared statements. These methods ensure that user-supplied input is always treated as literal values, not part of the SQL command.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```javascript\nlet userId = /* user-supplied input */;\ndb.sequelize.query(\"SELECT * FROM Users WHERE id = :userId\", \n{ \n    replacements: { userId: userId },\n    model: db.User \n}).then(user => {\n    // ...\n});\n```\n\nIn this fix, the SQL query is a constant string and the user-supplied input is passed as a parameter to the query.\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n\n## References\n\n- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)\n- [CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')](https://cwe.mitre.org/data/definitions/89.html)"
               },
               "properties": {
                 "cwe": [
@@ -242,34 +286,12 @@
               }
             },
             {
-              "id": "af01a7ee-caac-33b0-a917-bfcfb3bce866",
-              "name": "Unset 'secure' in default session middleware settings vulnerability",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe `secure` flag in the session middleware settings of an Express.js application is used to specify whether cookies should be sent over secure connections only. When `secure` is set to `false`, cookies can be sent over unencrypted connections, which makes them vulnerable to interception and manipulation by attackers. This is a violation of the OWASP Secure Coding Practices, which recommend that all cookies should be sent over secure connections only.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should set the `secure` flag to `true` in your session middleware settings. This will ensure that cookies are sent over secure connections only. However, you should be aware that this will prevent your application from sending cookies over unencrypted connections, which may impact functionality if your application is not set up to use HTTPS.\n\n## Source Code Fix Recommendation\n\nHere is how you can fix the vulnerability in your source code:\n\n```javascript\napp.use(session({\n  secret: 'keyboard cat',\n  resave: true,\n  saveUninitialized: true,\n  cookie: { secure: true }\n}))\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- express\n- express-session\n\n## References\n\n- [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)\n- [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-319",
-                    "url": "https://cwe.mitre.org/data/definitions/319.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-319"
-                ]
-              }
-            },
-            {
-              "id": "90408b14-a210-379b-a93e-9fa7a1965540",
+              "id": "a46d83fc-ded8-3469-8316-e0528591d6d3",
               "name": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when unescaped external data is used in an EJS template. This can lead to Cross-Site Scripting (XSS) attacks, where an attacker can inject malicious scripts into web pages viewed by other users. These scripts can steal sensitive information, manipulate web content, or perform actions on behalf of the user without their consent.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always escape external data before using it in your templates. This can be done using the `<%- %>` syntax in EJS, which escapes HTML entities. Never trust user input or any data that comes from an external source.\n\n## Source Code Fix Recommendation\n\nIn your specific code example, the `id` property of the `products` array is being output without being escaped. This can be fixed by using the `<%- %>` syntax to escape the `id`:\n\n```javascript\n<td><%- output.products[i].id %></td>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies to execute properly:\n\n- EJS\n\n## OWASP and CWE Resources\n\n- [OWASP Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/)\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
+                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when user-supplied data is not properly sanitized or escaped before being included in an EJS template. This can lead to Cross-Site Scripting (XSS) attacks, where an attacker can inject malicious scripts into web pages viewed by other users. These scripts can steal sensitive information, perform actions on behalf of the user, or exploit other vulnerabilities in the user's browser.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always escape user-supplied data before including it in an EJS template. This can be done using the `<%= %>` syntax in EJS, which automatically escapes HTML characters. Additionally, it is a good practice to validate and sanitize user input on the server side before using it in any context.\n\n## Source Code Fix Recommendation\n\nThe vulnerable code:\n\n```javascript\nListing products with <strong>search query: </strong> <%- output.searchTerm %>\n```\n\nThe fixed code:\n\n```javascript\nListing products with <strong>search query: </strong> <%= output.searchTerm %>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- EJS\n\n## References\n\n- [OWASP XSS (Cross Site Scripting) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
@@ -286,34 +308,12 @@
               }
             },
             {
-              "id": "d20ba9e2-94ee-370c-9227-db01ee13e9a0",
-              "name": "Detected Hard-Coded Credential Vulnerability",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nDetected Hard-Coded Credential Vulnerability refers to the insecure practice of embedding plaintext credentials directly within the source code. This vulnerability can lead to unauthorized access if the source code is ever exposed, as the credentials are easily readable. In JavaScript, this vulnerability can occur when sensitive data like API keys, database credentials, or in this case, a secret key for session management, are hard-coded into the application.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, sensitive data should never be hard-coded directly into the source code. Instead, use environment variables to store this data. Environment variables are a type of dynamic-named value that can affect the way running processes behave on a computer. They are part of the environment in which a process runs.\n\n## Source Code Fix Recommendation\n\nInstead of hard-coding the secret directly into the code, you should store it in an environment variable. Here's how you can do it:\n\n```javascript\nconst express = require('express');\nconst session = require('express-session');\n\nconst app = express();\n\napp.use(session({\n  secret: process.env.SESSION_SECRET,\n  resave: false,\n  saveUninitialized: true\n}));\n\n// rest of your code\n```\n\nIn this code, `process.env.SESSION_SECRET` is used to access the `SESSION_SECRET` environment variable. You can set this variable in your server's environment, or if you're using a platform like Heroku, in the settings for your application.\n\n## Library Dependencies\n\nThe code example requires the following libraries:\n\n- express\n- express-session\n\n## References\n\n- [OWASP Top 10-2017 A2-Broken Authentication](https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication)\n- [OWASP Top 10-2017 A3-Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n- [CWE-798: Use of Hard-coded Credentials](https://cwe.mitre.org/data/definitions/798.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-798",
-                    "url": "https://cwe.mitre.org/data/definitions/798.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-798"
-                ]
-              }
-            },
-            {
-              "id": "a46d83fc-ded8-3469-8316-e0528591d6d3",
+              "id": "90408b14-a210-379b-a93e-9fa7a1965540",
               "name": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when user-supplied data is not properly sanitized or escaped before being included in an EJS template. This can lead to Cross-Site Scripting (XSS) attacks, where an attacker can inject malicious scripts into web pages viewed by other users. These scripts can steal sensitive information, perform actions on behalf of the user, or exploit other vulnerabilities in the user's browser.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always escape user-supplied data before including it in an EJS template. This can be done using the `<%= %>` syntax in EJS, which automatically escapes HTML characters. Additionally, it is a good practice to validate and sanitize user input on the server side before using it in any context.\n\n## Source Code Fix Recommendation\n\nThe vulnerable code:\n\n```javascript\nListing products with <strong>search query: </strong> <%- output.searchTerm %>\n```\n\nThe fixed code:\n\n```javascript\nListing products with <strong>search query: </strong> <%= output.searchTerm %>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- EJS\n\n## References\n\n- [OWASP XSS (Cross Site Scripting) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
+                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when unescaped external data is used in an EJS template. This can lead to Cross-Site Scripting (XSS) attacks, where an attacker can inject malicious scripts into web pages viewed by other users. These scripts can steal sensitive information, manipulate web content, or perform actions on behalf of the user without their consent.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always escape external data before using it in your templates. This can be done using the `<%- %>` syntax in EJS, which escapes HTML entities. Never trust user input or any data that comes from an external source.\n\n## Source Code Fix Recommendation\n\nIn your specific code example, the `id` property of the `products` array is being output without being escaped. This can be fixed by using the `<%- %>` syntax to escape the `id`:\n\n```javascript\n<td><%- output.products[i].id %></td>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies to execute properly:\n\n- EJS\n\n## OWASP and CWE Resources\n\n- [OWASP Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/)\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
@@ -396,12 +396,12 @@
               }
             },
             {
-              "id": "a8c344fb-e0b9-3bd0-beba-bc74b30a9708",
+              "id": "2a87e4aa-7bb1-34b0-9997-53cf7be00f72",
               "name": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when unescaped external data is used in an EJS template. This can lead to Cross-Site Scripting (XSS) attacks, where an attacker can inject malicious scripts into web pages viewed by other users. These scripts can steal sensitive information, perform actions on behalf of the user, or exploit other vulnerabilities in the user's browser.\n\nIn the provided code snippet, the vulnerability arises from the use of `<%-` instead of `<%=`, which results in the output not being escaped:\n\n```javascript\n<td><%- output.products[i].tags %></td>\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always escape external data that is being output to the browser. This can be done by using `<%=` instead of `<%-` in EJS templates. This will ensure that any HTML special characters are properly escaped, preventing them from being interpreted as code by the browser.\n\n## Source Code Fix Recommendation\n\nHere is the fixed version of the code:\n\n```javascript\n<td><%= output.products[i].tags %></td>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- EJS: A JavaScript templating engine.\n\n## OWASP and CWE Resources\n\n- [OWASP Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
+                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. This allows attackers to execute scripts in the victim's browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.\n\nEJS (Embedded JavaScript) templates are a popular templating engine in JavaScript. The vulnerability arises when the `<%- %>` syntax is used in EJS templates, which does not escape HTML entities, thus allowing potential Cross-Site Scripting (XSS) attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always use the `<%= %>` syntax in EJS templates, which escapes HTML entities. This will prevent potential XSS attacks. \n\nAlso, always validate and sanitize user input to ensure that it does not contain malicious scripts. Use a trusted library or framework that makes it easy to escape potentially harmful characters.\n\n## Source Code Fix Recommendation\n\nReplace the `<%- %>` syntax with `<%= %>` in your EJS templates. Here is the fixed code:\n\n```javascript\n<td><%= output.products[i].code %></td>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- EJS\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
@@ -418,12 +418,12 @@
               }
             },
             {
-              "id": "2a87e4aa-7bb1-34b0-9997-53cf7be00f72",
+              "id": "a8c344fb-e0b9-3bd0-beba-bc74b30a9708",
               "name": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. This allows attackers to execute scripts in the victim's browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.\n\nEJS (Embedded JavaScript) templates are a popular templating engine in JavaScript. The vulnerability arises when the `<%- %>` syntax is used in EJS templates, which does not escape HTML entities, thus allowing potential Cross-Site Scripting (XSS) attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always use the `<%= %>` syntax in EJS templates, which escapes HTML entities. This will prevent potential XSS attacks. \n\nAlso, always validate and sanitize user input to ensure that it does not contain malicious scripts. Use a trusted library or framework that makes it easy to escape potentially harmful characters.\n\n## Source Code Fix Recommendation\n\nReplace the `<%- %>` syntax with `<%= %>` in your EJS templates. Here is the fixed code:\n\n```javascript\n<td><%= output.products[i].code %></td>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- EJS\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
+                "markdown": "## Description\n\n\"EJS Template XSS Vulnerability Detected Due to Unescaped External Data\" is a vulnerability that occurs when unescaped external data is used in an EJS template. This can lead to Cross-Site Scripting (XSS) attacks, where an attacker can inject malicious scripts into web pages viewed by other users. These scripts can steal sensitive information, perform actions on behalf of the user, or exploit other vulnerabilities in the user's browser.\n\nIn the provided code snippet, the vulnerability arises from the use of `<%-` instead of `<%=`, which results in the output not being escaped:\n\n```javascript\n<td><%- output.products[i].tags %></td>\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, always escape external data that is being output to the browser. This can be done by using `<%=` instead of `<%-` in EJS templates. This will ensure that any HTML special characters are properly escaped, preventing them from being interpreted as code by the browser.\n\n## Source Code Fix Recommendation\n\nHere is the fixed version of the code:\n\n```javascript\n<td><%= output.products[i].tags %></td>\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- EJS: A JavaScript templating engine.\n\n## OWASP and CWE Resources\n\n- [OWASP Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
@@ -489,6 +489,28 @@
               }
             },
             {
+              "id": "caa78969-106f-30a0-815f-8634d1d554c0",
+              "name": "Unselected Field Database Query Vulnerability",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Unselected Field Database Query Vulnerability\" in JavaScript is a type of security vulnerability that occurs when a developer does not explicitly specify the fields to be returned from a database query. This can lead to the exposure of sensitive data if the query returns more data than intended. In the provided code, the `findAll` method is used without specifying the fields to be returned, which means all fields in the `Product` table will be returned.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, developers should always explicitly specify the fields to be returned from a database query. This can be done using the `attributes` option in the `findAll` method. By doing this, developers can ensure that only the necessary data is returned, reducing the risk of exposing sensitive data.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the provided code:\n\n```javascript\ndb.Product.findAll({\n    attributes: ['id', 'name', 'price'], // specify the fields to be returned\n    where: {\n        name: {\n            [Op.like]: '%' + req.body.name + '%'\n        }\n    }\n}).then(products => {\n    // ...\n});\n```\n\nIn this fixed version, the `findAll` method will only return the `id`, `name`, and `price` fields from the `Product` table.\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite, and Microsoft SQL Server.\n- Express: A fast, unopinionated, and flexible Node.js web application framework.\n\n## References\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-209",
+                    "url": "https://cwe.mitre.org/data/definitions/209.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-209"
+                ]
+              }
+            },
+            {
               "id": "c8d00ddc-cb2f-3386-8938-1060a8e7a487",
               "name": "Unhandled Promise Rejection Vulnerability",
               "helpUri": "https://www.glog.ai/",
@@ -511,24 +533,24 @@
               }
             },
             {
-              "id": "caa78969-106f-30a0-815f-8634d1d554c0",
-              "name": "Unselected Field Database Query Vulnerability",
+              "id": "d956d5d7-fa6d-32d3-9cd0-0b60c5231067",
+              "name": "XSS Vulnerability from User-Controlled Data in HTML String",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Unselected Field Database Query Vulnerability\" in JavaScript is a type of security vulnerability that occurs when a developer does not explicitly specify the fields to be returned from a database query. This can lead to the exposure of sensitive data if the query returns more data than intended. In the provided code, the `findAll` method is used without specifying the fields to be returned, which means all fields in the `Product` table will be returned.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, developers should always explicitly specify the fields to be returned from a database query. This can be done using the `attributes` option in the `findAll` method. By doing this, developers can ensure that only the necessary data is returned, reducing the risk of exposing sensitive data.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the provided code:\n\n```javascript\ndb.Product.findAll({\n    attributes: ['id', 'name', 'price'], // specify the fields to be returned\n    where: {\n        name: {\n            [Op.like]: '%' + req.body.name + '%'\n        }\n    }\n}).then(products => {\n    // ...\n});\n```\n\nIn this fixed version, the `findAll` method will only return the `id`, `name`, and `price` fields from the `Product` table.\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite, and Microsoft SQL Server.\n- Express: A fast, unopinionated, and flexible Node.js web application framework.\n\n## References\n\n- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)"
+                "markdown": "## Description\n\nCross-Site Scripting (XSS) vulnerabilities occur when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. XSS allows attackers to execute scripts in the victim's browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.\n\nIn the provided JavaScript code, the application is vulnerable to XSS because it includes user-controlled data (`req.body.name`) in the HTML output without proper escaping. This allows an attacker to inject malicious scripts by sending a specially crafted `name` parameter.\n\n## Mitigation Advice\n\nTo mitigate XSS vulnerabilities, you should:\n\n- Use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface.\n- For any data that is included in the HTML output, use proper output encoding or escaping.\n- Apply context-sensitive encoding when modifying the browser document on the client side.\n- Use an appropriate Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities.\n\n## Source Code Fix Recommendation\n\nIn the provided code, you can mitigate the XSS vulnerability by using a template engine that automatically escapes user-controlled data. For example, if you are using the EJS template engine, you can use `<%= output.searchTerm %>` to include `searchTerm` in the HTML output. This will automatically escape any special characters.\n\n```javascript\ndb.Product.findAll({\n\twhere: {\n\t\tname: {\n\t\t\t[Op.like]: '%' + req.body.name + '%'\n\t\t}\n\t}\n}).then(products => {\n\toutput = {\n\t\tproducts: products,\n\t\tsearchTerm: req.body.name\n\t}\n\tres.render('app/products', {\n\t\toutput: output\n\t})\n})\n```\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n- Express: A fast, unopinionated, minimalist web framework for Node.js.\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-209",
-                    "url": "https://cwe.mitre.org/data/definitions/209.html"
+                    "id": "CWE-79",
+                    "url": "https://cwe.mitre.org/data/definitions/79.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-209"
+                  "CWE-79"
                 ]
               }
             },
@@ -577,28 +599,6 @@
               }
             },
             {
-              "id": "d956d5d7-fa6d-32d3-9cd0-0b60c5231067",
-              "name": "XSS Vulnerability from User-Controlled Data in HTML String",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nCross-Site Scripting (XSS) vulnerabilities occur when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. XSS allows attackers to execute scripts in the victim's browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.\n\nIn the provided JavaScript code, the application is vulnerable to XSS because it includes user-controlled data (`req.body.name`) in the HTML output without proper escaping. This allows an attacker to inject malicious scripts by sending a specially crafted `name` parameter.\n\n## Mitigation Advice\n\nTo mitigate XSS vulnerabilities, you should:\n\n- Use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface.\n- For any data that is included in the HTML output, use proper output encoding or escaping.\n- Apply context-sensitive encoding when modifying the browser document on the client side.\n- Use an appropriate Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities.\n\n## Source Code Fix Recommendation\n\nIn the provided code, you can mitigate the XSS vulnerability by using a template engine that automatically escapes user-controlled data. For example, if you are using the EJS template engine, you can use `<%= output.searchTerm %>` to include `searchTerm` in the HTML output. This will automatically escape any special characters.\n\n```javascript\ndb.Product.findAll({\n\twhere: {\n\t\tname: {\n\t\t\t[Op.like]: '%' + req.body.name + '%'\n\t\t}\n\t}\n}).then(products => {\n\toutput = {\n\t\tproducts: products,\n\t\tsearchTerm: req.body.name\n\t}\n\tres.render('app/products', {\n\t\toutput: output\n\t})\n})\n```\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n- Express: A fast, unopinionated, minimalist web framework for Node.js.\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-79",
-                    "url": "https://cwe.mitre.org/data/definitions/79.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-79"
-                ]
-              }
-            },
-            {
               "id": "62bc3e5d-aa43-36a8-9c56-36406f37f48a",
               "name": "Unverified User Input IDOR Vulnerability",
               "helpUri": "https://www.glog.ai/",
@@ -643,28 +643,6 @@
               }
             },
             {
-              "id": "15724e00-e71c-3b1d-906e-22bafe0e35de",
-              "name": "Unhandled Promise Rejection Vulnerability",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nUnhandled Promise Rejection Vulnerability in JavaScript occurs when a promise is rejected, but the rejection is not caught or handled. This can lead to unexpected application behavior and potential security vulnerabilities. In the provided code, if the `db.User.find` promise is rejected (for example, if there is a database error), there is no `.catch` block to handle the error, which could lead to an Unhandled Promise Rejection.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always handle promise rejections by adding a `.catch` block after your `.then` block. This allows you to handle any errors that occur during the execution of the promise. In addition, you should also consider using `async/await` syntax, which can make your code more readable and easier to understand.\n\n## Source Code Fix Recommendation\n\nHere is the fixed code:\n\n```javascript\ndb.User.find({\n\twhere: {\n\t\t'id': req.body.id\n\t}\t\t\n}).then(user =>{\n\tif(req.body.password.length>0){\n\t\tif(req.body.password.length>0){\n\t\t\tif (req.body.password == req.body.cpassword) {\n\t\t\t\tuser.password = bCrypt.hashSync(req.body.password, bCrypt.genSaltSync(10), null)\n\t\t\t}else{\n\t\t\t\treq.flash('warning', 'Passwords dont match')\n\t\t\t\tres.render('app/useredit', {\n\t\t\t\t\tuserId: req.user.id,\n\t\t\t\t\tuserEmail: req.user.email,\n\t\t\t\t\tuserName: req.user.name,\n\t\t\t\t})\n\t\t\t\treturn\t\t\n\t\t\t}\n\t\t}else{\n\t\t\treq.flash('warning', 'Invalid Password')\n\t\t\tres.render('app/useredit', {\n\t\t\t\tuserId: req.user.id,\n\t\t\t\tuserEmail: req.user.email,\n\t\t\t\tuserName: req.user.name,\n\t\t\t})\n\t\t\treturn\n\t\t}\n\t}\n\tuser.email = req.body.email\n\tuser.name = req.body.name\n\tuser.save().then(function () {\n\t\treq.flash('success',\"Updated successfully\")\n\t\tres.render('app/useredit', {\n\t\t\tuserId: req.body.id,\n\t\t\tuserEmail: req.body.email,\n\t\t\tuserName: req.body.name,\n\t\t})\n\t}).catch(err => {\n\t\t// Handle the error here\n\t\tconsole.error(err);\n\t})\n}).catch(err => {\n\t// Handle the error here\n\tconsole.error(err);\n});\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- A database library that supports promises (such as Sequelize)\n- Express.js for handling HTTP requests and responses\n- bcrypt for hashing passwords\n- A flash messaging library (such as connect-flash)\n\n## References\n\n- [OWASP - Unhandled Promise Rejection](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#unhandled-promise-rejections)\n- [CWE-754: Improper Check for Unusual or Exceptional Conditions](https://cwe.mitre.org/data/definitions/754.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-754",
-                    "url": "https://cwe.mitre.org/data/definitions/754.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-754"
-                ]
-              }
-            },
-            {
               "id": "ccc3f7d3-17f7-3c2e-a1bf-d4b3c5003260",
               "name": "Unverified User Input IDOR Vulnerability",
               "helpUri": "https://www.glog.ai/",
@@ -688,6 +666,28 @@
                 "tags": [
                   "CWE-285",
                   "CWE-89"
+                ]
+              }
+            },
+            {
+              "id": "15724e00-e71c-3b1d-906e-22bafe0e35de",
+              "name": "Unhandled Promise Rejection Vulnerability",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nUnhandled Promise Rejection Vulnerability in JavaScript occurs when a promise is rejected, but the rejection is not caught or handled. This can lead to unexpected application behavior and potential security vulnerabilities. In the provided code, if the `db.User.find` promise is rejected (for example, if there is a database error), there is no `.catch` block to handle the error, which could lead to an Unhandled Promise Rejection.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always handle promise rejections by adding a `.catch` block after your `.then` block. This allows you to handle any errors that occur during the execution of the promise. In addition, you should also consider using `async/await` syntax, which can make your code more readable and easier to understand.\n\n## Source Code Fix Recommendation\n\nHere is the fixed code:\n\n```javascript\ndb.User.find({\n\twhere: {\n\t\t'id': req.body.id\n\t}\t\t\n}).then(user =>{\n\tif(req.body.password.length>0){\n\t\tif(req.body.password.length>0){\n\t\t\tif (req.body.password == req.body.cpassword) {\n\t\t\t\tuser.password = bCrypt.hashSync(req.body.password, bCrypt.genSaltSync(10), null)\n\t\t\t}else{\n\t\t\t\treq.flash('warning', 'Passwords dont match')\n\t\t\t\tres.render('app/useredit', {\n\t\t\t\t\tuserId: req.user.id,\n\t\t\t\t\tuserEmail: req.user.email,\n\t\t\t\t\tuserName: req.user.name,\n\t\t\t\t})\n\t\t\t\treturn\t\t\n\t\t\t}\n\t\t}else{\n\t\t\treq.flash('warning', 'Invalid Password')\n\t\t\tres.render('app/useredit', {\n\t\t\t\tuserId: req.user.id,\n\t\t\t\tuserEmail: req.user.email,\n\t\t\t\tuserName: req.user.name,\n\t\t\t})\n\t\t\treturn\n\t\t}\n\t}\n\tuser.email = req.body.email\n\tuser.name = req.body.name\n\tuser.save().then(function () {\n\t\treq.flash('success',\"Updated successfully\")\n\t\tres.render('app/useredit', {\n\t\t\tuserId: req.body.id,\n\t\t\tuserEmail: req.body.email,\n\t\t\tuserName: req.body.name,\n\t\t})\n\t}).catch(err => {\n\t\t// Handle the error here\n\t\tconsole.error(err);\n\t})\n}).catch(err => {\n\t// Handle the error here\n\tconsole.error(err);\n});\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- A database library that supports promises (such as Sequelize)\n- Express.js for handling HTTP requests and responses\n- bcrypt for hashing passwords\n- A flash messaging library (such as connect-flash)\n\n## References\n\n- [OWASP - Unhandled Promise Rejection](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#unhandled-promise-rejections)\n- [CWE-754: Improper Check for Unusual or Exceptional Conditions](https://cwe.mitre.org/data/definitions/754.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-754",
+                    "url": "https://cwe.mitre.org/data/definitions/754.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-754"
                 ]
               }
             },
@@ -913,23 +913,23 @@
             },
             {
               "id": "83ca2a00-6d50-3d3c-b58c-b3ebbaadfd82",
-              "name": "Unfiltered Database Query Vulnerability",
+              "name": "Unverified User Input IDOR Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nUnfiltered Database Query Vulnerability, also known as NoSQL Injection, is a type of vulnerability where an attacker can inject code into the query that is being run on the database. This can lead to unauthorized access to sensitive data, data loss, or even data corruption. In the provided JavaScript code, the vulnerability lies in the fact that the 'login' field from the request body is directly used in the database query without any sanitization or validation.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always validate and sanitize user inputs before using them in a database query. This can be done using various input validation libraries available for JavaScript. Also, use parameterized queries or prepared statements to ensure that user inputs are treated as literal values and not executable code.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the provided code:\n\n```javascript\nconst Sequelize = require('sequelize');\nconst Op = Sequelize.Op;\n\ndb.User.find({\n    where: {\n        'login': {\n            [Op.eq]: req.body.login\n        }\n    }\n}).then(user => {\n    // ...\n});\n```\n\nIn this fixed code, Sequelize, an Object-Relational Mapping (ORM) library for Node.js, is used to create a parameterized query. The `Op.eq` operator is used to ensure that the 'login' field is compared for equality with the user input, preventing any possibility of code injection.\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- Express.js (for handling HTTP requests)\n- Sequelize (for interacting with the database)\n\n## References\n\n- [OWASP Node.js Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#mongodb-injection)\n- [CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')](https://cwe.mitre.org/data/definitions/89.html)"
+                "markdown": "## Description\n\nUnverified User Input IDOR (Insecure Direct Object References) Vulnerability is a type of security vulnerability that occurs when a function with no proper access control is used to access specific resources directly. In JavaScript, this vulnerability can occur when a user-supplied input is used directly to query a database without proper validation or authorization checks. This can allow an attacker to manipulate the input to gain unauthorized access to data.\n\nIn the provided code snippet, the application is using the user-supplied login name (`req.body.login`) directly to query the database for a user. If an attacker can guess or brute-force a valid login name, they can potentially gain unauthorized access to that user's data.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Always validate user-supplied inputs: Ensure that the input matches the expected format and length. This can help prevent SQL Injection attacks.\n\n2. Implement proper access control: Ensure that the user is authorized to access the requested resource. This can help prevent unauthorized access to data.\n\n3. Use parameterized queries or prepared statements: This can help prevent SQL Injection attacks by ensuring that user-supplied inputs are always treated as literal values, not part of the SQL command.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```javascript\n// Assuming Express.js and Sequelize ORM\napp.post('/login', (req, res) => {\n  // Validate input\n  if (!req.body.login || typeof req.body.login !== 'string' || req.body.login.length > 100) {\n    return res.status(400).send('Invalid login');\n  }\n\n  // Query database\n  db.User.find({\n    where: {\n      'login': req.body.login\n    }\n  }).then(user => {\n    // Check if user exists\n    if (!user) {\n      return res.status(404).send('User not found');\n    }\n\n    // Check if user is authorized to access the requested resource\n    if (req.session.userId !== user.id) {\n      return res.status(403).send('Unauthorized');\n    }\n\n    // Continue processing...\n  });\n});\n```\n\n## Library Dependencies\n\nThe provided code snippet requires the following library dependencies:\n\n- Express.js: A web application framework for Node.js.\n- Sequelize: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite, and Microsoft SQL Server.\n\n## References\n\n- [CWE-639: Authorization Bypass Through User-Controlled Key](https://cwe.mitre.org/data/definitions/639.html)"
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-89",
-                    "url": "https://cwe.mitre.org/data/definitions/89.html"
+                    "id": "CWE-639",
+                    "url": "https://cwe.mitre.org/data/definitions/639.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-89"
+                  "CWE-639"
                 ]
               }
             },
@@ -1044,6 +1044,28 @@
               }
             },
             {
+              "id": "f40d37bc-a799-33d2-976e-505fb388e17a",
+              "name": "Unhandled Promise Rejection Vulnerability",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Unhandled Promise Rejection Vulnerability\" is a type of vulnerability in JavaScript that occurs when a promise is rejected, but there is no error handling mechanism in place to catch and handle the error. This can lead to unexpected application behavior, including crashes and potential security risks.\n\nIn the provided code, the `sequelize.authenticate()` function returns a promise. If the promise is rejected (for example, if the database connection fails), there is no `catch` block to handle the error. This can lead to an Unhandled Promise Rejection.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always include error handling when working with promises. This can be done by chaining a `catch` block to the promise, which will be executed if the promise is rejected. The `catch` block should contain code to handle the error appropriately.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the provided code:\n\n```javascript\nsequelize\n  .authenticate()\n  .then(function () {\n    console.log('Connection has been established successfully.');\n  })\n  .catch(function (err) {\n    console.error('Unable to connect to the database:', err);\n  });\n```\n\nIn this version of the code, if the promise returned by `sequelize.authenticate()` is rejected, the `catch` block will be executed, logging the error to the console.\n\n## Library Dependencies\n\nThe provided code requires the following library dependencies:\n\n- `sequelize`: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.\n\n## References\n\n- [OWASP - Unhandled Promise Rejection](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_security_cheat_sheet.html#unhandled-promise-rejections)\n- [CWE-754: Improper Check for Unusual or Exceptional Conditions](https://cwe.mitre.org/data/definitions/754.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-754",
+                    "url": "https://cwe.mitre.org/data/definitions/754.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-754"
+                ]
+              }
+            },
+            {
               "id": "073f2b99-5b1e-39a8-8ef2-1116fdbbfb79",
               "name": "\"Potential Out-of-Destination Writing Vulnerability\"",
               "helpUri": "https://www.glog.ai/",
@@ -1066,12 +1088,12 @@
               }
             },
             {
-              "id": "9dd77efa-9225-3872-a5ca-87b17ddcb5cd",
-              "name": "Direct Writing to Response Object May Lead to XSS Vulnerability",
+              "id": "2992bbde-9c2e-361f-91b2-31865be4434c",
+              "name": "\"Potential XSS Vulnerability from User-Controlled Data in HTML String\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nCross-Site Scripting (XSS) is a type of injection security vulnerability typically found in web applications. XSS enables attackers to inject malicious scripts into web pages viewed by other users. A direct writing to response object vulnerability occurs when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript.\n\nIn the context of JavaScript programming, if you directly write user input to the response object, it may lead to an XSS vulnerability. For example, if you use `res.send(html)` where `html` is a string that includes user input, an attacker could inject malicious scripts into `html`.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always validate and sanitize user input. Never trust user input blindly. Use a secure method to generate HTML or JavaScript from user input. \n\n## Source Code Fix Recommendation\n\nInstead of using `res.send(html)`, use a template engine that automatically escapes user input, such as EJS or Pug. Here is an example using EJS:\n\n```javascript\nvar ejs = require('ejs');\n\n// ...\n\nvar html = ejs.render('<%= userContent %>', { userContent: userInput });\nres.send(html);\n```\n\nIn this example, `ejs.render` automatically escapes `userInput`, so it is safe to include in the response.\n\n## Library Dependencies\n\nThe code example requires the `ejs` library.\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [OWASP XSS (Cross Site Scripting) Prevention Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
+                "markdown": "## Description\n\nCross-Site Scripting (XSS) vulnerabilities occur when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. XSS allows attackers to execute scripts in the victim's browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.\n\nIn the provided code, the application is vulnerable to XSS because it includes user-controlled data (`req.params.vuln`) in the HTML response without proper output encoding or validation.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. **Validate Input**: User input should be validated as strictly as possible on arrival, given the kind of content that it is expected to contain.\n2. **Encode Data**: User-controlled data included in the HTML response should be HTML entity encoded to prevent the browser from interpreting it as HTML/JavaScript code.\n3. **Use Appropriate Response Headers**: To prevent XSS in HTTP responses that aren't intended to contain any HTML or JavaScript, you can use the `Content-Type` and `X-Content-Type-Options` headers to ensure that browsers interpret the responses in the way you intend.\n4. **Content Security Policy**: Use Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities that still occur.\n\n## Source Code Fix\n\nThe Express.js framework provides a way to escape HTML through the `escape-html` module. Here is how you can use it:\n\n```javascript\nvar escapeHtml = require('escape-html');\n\nres.render('vulnerabilities/layout', {\n\tvuln: escapeHtml(req.params.vuln),\n\tvuln_title: vulnDict[escapeHtml(req.params.vuln)],\n\tvuln_scenario: escapeHtml(req.params.vuln) + '/scenario',\n\tvuln_description: escapeHtml(req.params.vuln) + '/description',\n\tvuln_reference: escapeHtml(req.params.vuln) + '/reference',\n\tvulnerabilities:vulnDict\n}, function (err, html) {\n\tif (err) {\n\t\tconsole.log(err)\n\t\tres.status(404).send('404')\n\t} else {\n\t\tres.send(html)\n\t}\n})\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- Express.js\n- escape-html\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
@@ -1088,12 +1110,12 @@
               }
             },
             {
-              "id": "2992bbde-9c2e-361f-91b2-31865be4434c",
-              "name": "\"Potential XSS Vulnerability from User-Controlled Data in HTML String\"",
+              "id": "9dd77efa-9225-3872-a5ca-87b17ddcb5cd",
+              "name": "Direct Writing to Response Object May Lead to XSS Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nCross-Site Scripting (XSS) vulnerabilities occur when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript. XSS allows attackers to execute scripts in the victim's browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.\n\nIn the provided code, the application is vulnerable to XSS because it includes user-controlled data (`req.params.vuln`) in the HTML response without proper output encoding or validation.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. **Validate Input**: User input should be validated as strictly as possible on arrival, given the kind of content that it is expected to contain.\n2. **Encode Data**: User-controlled data included in the HTML response should be HTML entity encoded to prevent the browser from interpreting it as HTML/JavaScript code.\n3. **Use Appropriate Response Headers**: To prevent XSS in HTTP responses that aren't intended to contain any HTML or JavaScript, you can use the `Content-Type` and `X-Content-Type-Options` headers to ensure that browsers interpret the responses in the way you intend.\n4. **Content Security Policy**: Use Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities that still occur.\n\n## Source Code Fix\n\nThe Express.js framework provides a way to escape HTML through the `escape-html` module. Here is how you can use it:\n\n```javascript\nvar escapeHtml = require('escape-html');\n\nres.render('vulnerabilities/layout', {\n\tvuln: escapeHtml(req.params.vuln),\n\tvuln_title: vulnDict[escapeHtml(req.params.vuln)],\n\tvuln_scenario: escapeHtml(req.params.vuln) + '/scenario',\n\tvuln_description: escapeHtml(req.params.vuln) + '/description',\n\tvuln_reference: escapeHtml(req.params.vuln) + '/reference',\n\tvulnerabilities:vulnDict\n}, function (err, html) {\n\tif (err) {\n\t\tconsole.log(err)\n\t\tres.status(404).send('404')\n\t} else {\n\t\tres.send(html)\n\t}\n})\n```\n\n## Library Dependencies\n\nThe code example requires the following library dependencies:\n\n- Express.js\n- escape-html\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
+                "markdown": "## Description\n\nCross-Site Scripting (XSS) is a type of injection security vulnerability typically found in web applications. XSS enables attackers to inject malicious scripts into web pages viewed by other users. A direct writing to response object vulnerability occurs when an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user-supplied data using a browser API that can create HTML or JavaScript.\n\nIn the context of JavaScript programming, if you directly write user input to the response object, it may lead to an XSS vulnerability. For example, if you use `res.send(html)` where `html` is a string that includes user input, an attacker could inject malicious scripts into `html`.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always validate and sanitize user input. Never trust user input blindly. Use a secure method to generate HTML or JavaScript from user input. \n\n## Source Code Fix Recommendation\n\nInstead of using `res.send(html)`, use a template engine that automatically escapes user input, such as EJS or Pug. Here is an example using EJS:\n\n```javascript\nvar ejs = require('ejs');\n\n// ...\n\nvar html = ejs.render('<%= userContent %>', { userContent: userInput });\nres.send(html);\n```\n\nIn this example, `ejs.render` automatically escapes `userInput`, so it is safe to include in the response.\n\n## Library Dependencies\n\nThe code example requires the `ejs` library.\n\n## References\n\n- [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)\n- [OWASP XSS (Cross Site Scripting) Prevention Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)\n- [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html)"
               },
               "properties": {
                 "cwe": [
@@ -1186,41 +1208,6 @@
       },
       "language": "en-US",
       "results": [
-        {
-          "ruleId": "78935dac-7999-370f-871a-537b887d7db3",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Validate user input before using in shell commands with imported child_process module."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "core/appHandler.js",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 43,
-                  "snippet": {
-                    "text": "const exec = require('child_process').exec;"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "abde2a07997b073144a245b5849a9aa2988b874034275368e20601117948dcd2",
-            "glog-pfp-ruleFileCode/v1": "52e56ba6871681843d646d73e95b5c0967d96a4e1be859078e7e87ad6488e884"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "52e56ba6871681843d646d73e95b5c0967d96a4e1be859078e7e87ad6488e884"
-          },
-          "properties": {}
-        },
         {
           "ruleId": "21ea3123-3174-3d79-b784-74a27a5252e9",
           "kind": "fail",
@@ -1364,6 +1351,41 @@
           "properties": {}
         },
         {
+          "ruleId": "78935dac-7999-370f-871a-537b887d7db3",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Validate user input before using in shell commands with imported child_process module."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 43,
+                  "snippet": {
+                    "text": "const exec = require('child_process').exec;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "abde2a07997b073144a245b5849a9aa2988b874034275368e20601117948dcd2",
+            "glog-pfp-ruleFileCode/v1": "52e56ba6871681843d646d73e95b5c0967d96a4e1be859078e7e87ad6488e884"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "52e56ba6871681843d646d73e95b5c0967d96a4e1be859078e7e87ad6488e884"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "3b9b1a65-6df9-34c9-865c-92e11c2bd3f6",
           "kind": "fail",
           "level": "warning",
@@ -1399,72 +1421,37 @@
           "properties": {}
         },
         {
-          "ruleId": "f9220330-3239-30f0-bb86-58261d761080",
+          "ruleId": "055908f0-60ec-34e2-99d7-df61704e3569",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"Libxml library's `noent` attribute set to `true` can lead to XXE vulnerabilities; recommended to set `noent` to `false` for protection.\""
+            "text": "Potential Path Traversal Vulnerability Detected in `path.join` or `path.resolve` Function Due to Unsanitized User Input"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "core/appHandler.js",
+                  "uri": "models/index.js",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 235,
-                  "startColumn": 42,
-                  "endLine": 235,
-                  "endColumn": 82,
+                  "startLine": 43,
+                  "startColumn": 55,
+                  "endLine": 43,
+                  "endColumn": 59,
                   "snippet": {
-                    "text": "\t\tvar products = libxmljs.parseXmlString(req.files.products.data.toString('utf8'), {noent:true,noblanks:true})"
+                    "text": "    var model = sequelize.import(path.join(__dirname, file));"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "506d20d987043b34075880eda1b63471d7f1074d3ac7e003bcefc28ade497ce1",
-            "glog-pfp-ruleFileCode/v1": "685ff32d21e97f81a6e7d48f0e43156a4b587aece4b9c62be0452da817ed68cc"
+            "glog-pfp-ruleFileLineCode/v1": "2671bcbc7e8881ce5c1529fe88dd891e4cbac87e364e04e3a05c2e963d30d822",
+            "glog-pfp-ruleFileCode/v1": "27e83a190480a1c312ee9a23c21e82a9624a93f28f30257982d4be2e28bef2f4"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "685ff32d21e97f81a6e7d48f0e43156a4b587aece4b9c62be0452da817ed68cc"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "fd7234c9-f60f-32b7-86c2-9d3be0e45876",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"XML Parsing Library Found: Disable External Entity Resolution to Avoid XXE Attacks\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "core/appHandler.js",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 16,
-                  "endLine": 5,
-                  "endColumn": 35,
-                  "snippet": {
-                    "text": "var libxmljs = require(\"libxmljs\");"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "35ca405e2b602d276a80f54dfee0bedd65c9b289ae9fbb8fee232202ffa70771",
-            "glog-pfp-ruleFileCode/v1": "9b057744b126584e6bb10052a0411538274d1a964597897754ebc9ba040e5b24"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "9b057744b126584e6bb10052a0411538274d1a964597897754ebc9ba040e5b24"
+            "glog-fp-ruleFileCode/v1": "27e83a190480a1c312ee9a23c21e82a9624a93f28f30257982d4be2e28bef2f4"
           },
           "properties": {}
         },
@@ -1539,37 +1526,72 @@
           "properties": {}
         },
         {
-          "ruleId": "bab5710e-f80a-3d06-a815-795f80c5ba2a",
+          "ruleId": "fd7234c9-f60f-32b7-86c2-9d3be0e45876",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"Undetected CSRF Middleware in Your Express Application\""
+            "text": "\"XML Parsing Library Found: Disable External Entity Resolution to Avoid XXE Attacks\""
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "server.js",
+                  "uri": "core/appHandler.js",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 11,
-                  "startColumn": 5,
-                  "endLine": 11,
-                  "endColumn": 20,
+                  "startLine": 5,
+                  "startColumn": 16,
+                  "endLine": 5,
+                  "endColumn": 35,
                   "snippet": {
-                    "text": "var app = express()"
+                    "text": "var libxmljs = require(\"libxmljs\");"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "c9bada67aa30b2f4eef499ae0ca4472c5112206f8b1f915f95e31c71920cec53",
-            "glog-pfp-ruleFileCode/v1": "8f394d39a3ece33e72976fb1dd36c31432fd44642281eee517d4e079100167cc"
+            "glog-pfp-ruleFileLineCode/v1": "35ca405e2b602d276a80f54dfee0bedd65c9b289ae9fbb8fee232202ffa70771",
+            "glog-pfp-ruleFileCode/v1": "9b057744b126584e6bb10052a0411538274d1a964597897754ebc9ba040e5b24"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "8f394d39a3ece33e72976fb1dd36c31432fd44642281eee517d4e079100167cc"
+            "glog-fp-ruleFileCode/v1": "9b057744b126584e6bb10052a0411538274d1a964597897754ebc9ba040e5b24"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "f9220330-3239-30f0-bb86-58261d761080",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Libxml library's `noent` attribute set to `true` can lead to XXE vulnerabilities; recommended to set `noent` to `false` for protection.\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 235,
+                  "startColumn": 42,
+                  "endLine": 235,
+                  "endColumn": 82,
+                  "snippet": {
+                    "text": "\t\tvar products = libxmljs.parseXmlString(req.files.products.data.toString('utf8'), {noent:true,noblanks:true})"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "506d20d987043b34075880eda1b63471d7f1074d3ac7e003bcefc28ade497ce1",
+            "glog-pfp-ruleFileCode/v1": "685ff32d21e97f81a6e7d48f0e43156a4b587aece4b9c62be0452da817ed68cc"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "685ff32d21e97f81a6e7d48f0e43156a4b587aece4b9c62be0452da817ed68cc"
           },
           "properties": {}
         },
@@ -1609,81 +1631,46 @@
           "properties": {}
         },
         {
-          "ruleId": "055908f0-60ec-34e2-99d7-df61704e3569",
+          "ruleId": "bab5710e-f80a-3d06-a815-795f80c5ba2a",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "Potential Path Traversal Vulnerability Detected in `path.join` or `path.resolve` Function Due to Unsanitized User Input"
+            "text": "\"Undetected CSRF Middleware in Your Express Application\""
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "models/index.js",
+                  "uri": "server.js",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 43,
-                  "startColumn": 55,
-                  "endLine": 43,
-                  "endColumn": 59,
+                  "startLine": 11,
+                  "startColumn": 5,
+                  "endLine": 11,
+                  "endColumn": 20,
                   "snippet": {
-                    "text": "    var model = sequelize.import(path.join(__dirname, file));"
+                    "text": "var app = express()"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "2671bcbc7e8881ce5c1529fe88dd891e4cbac87e364e04e3a05c2e963d30d822",
-            "glog-pfp-ruleFileCode/v1": "27e83a190480a1c312ee9a23c21e82a9624a93f28f30257982d4be2e28bef2f4"
+            "glog-pfp-ruleFileLineCode/v1": "c9bada67aa30b2f4eef499ae0ca4472c5112206f8b1f915f95e31c71920cec53",
+            "glog-pfp-ruleFileCode/v1": "8f394d39a3ece33e72976fb1dd36c31432fd44642281eee517d4e079100167cc"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "27e83a190480a1c312ee9a23c21e82a9624a93f28f30257982d4be2e28bef2f4"
+            "glog-fp-ruleFileCode/v1": "8f394d39a3ece33e72976fb1dd36c31432fd44642281eee517d4e079100167cc"
           },
           "properties": {}
         },
         {
-          "ruleId": "0960e248-84d3-3502-bcd0-541e59f5ebba",
+          "ruleId": "5111e466-07a0-3497-a1dd-5ad327493f27",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"SQL Injection Risk from Untrusted Input Concatenation: Use Data Replacement or Binding\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "core/appHandler.js",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 10,
-                  "startColumn": 2,
-                  "endLine": 35,
-                  "endColumn": 4,
-                  "snippet": {
-                    "text": "\tvar query = \"SELECT name,id FROM Users WHERE login='\" + req.body.login + \"'\";\n\tdb.sequelize.query(query, {\n\t\tmodel: db.User\n\t}).then(user => {\n\t\tif (user.length) {\n\t\t\tvar output = {\n\t\t\t\tuser: {\n\t\t\t\t\tname: user[0].name,\n\t\t\t\t\tid: user[0].id\n\t\t\t\t}\n\t\t\t}\n\t\t\tres.render('app/usersearch', {\n\t\t\t\toutput: output\n\t\t\t})\n\t\t} else {\n\t\t\treq.flash('warning', 'User not found')\n\t\t\tres.render('app/usersearch', {\n\t\t\t\toutput: null\n\t\t\t})\n\t\t}\n\t}).catch(err => {\n\t\treq.flash('danger', 'Internal Error')\n\t\tres.render('app/usersearch', {\n\t\t\toutput: null\n\t\t})\n\t})"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "1085e92bf69b313df40ac8e2e1a276eec8450da2d9485c79ec8d712781dd948a",
-            "glog-pfp-ruleFileCode/v1": "5d54b6e7f38b5e6f22b7b077ffbefaa28ebd245c2076a41e5fa35839f111e210"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "5d54b6e7f38b5e6f22b7b077ffbefaa28ebd245c2076a41e5fa35839f111e210"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "31813b77-cfad-3bb8-8371-b438a70a3e1b",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unhandled Promise Rejection Vulnerability"
+            "text": "\"Potential SQL Injection Due to User-Controlled Input in Raw SQL Query\""
           },
           "locations": [
             {
@@ -1695,56 +1682,21 @@
                 "region": {
                   "startLine": 11,
                   "startColumn": 2,
-                  "endLine": 30,
+                  "endLine": 13,
                   "endColumn": 4,
                   "snippet": {
-                    "text": "\tdb.sequelize.query(query, {\n\t\tmodel: db.User\n\t}).then(user => {\n\t\tif (user.length) {\n\t\t\tvar output = {\n\t\t\t\tuser: {\n\t\t\t\t\tname: user[0].name,\n\t\t\t\t\tid: user[0].id\n\t\t\t\t}\n\t\t\t}\n\t\t\tres.render('app/usersearch', {\n\t\t\t\toutput: output\n\t\t\t})\n\t\t} else {\n\t\t\treq.flash('warning', 'User not found')\n\t\t\tres.render('app/usersearch', {\n\t\t\t\toutput: null\n\t\t\t})\n\t\t}\n\t}).catch(err => {"
+                    "text": "\tdb.sequelize.query(query, {\n\t\tmodel: db.User\n\t}).then(user => {"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "c5b64d1e95afdc96ec94817996ed9fa4919913e89c2ea399839d1df707c6f6ba",
-            "glog-pfp-ruleFileCode/v1": "f9fef2ccfc298a4c54522af0242213e466f561d56f874dbfba068ddaadd44679"
+            "glog-pfp-ruleFileLineCode/v1": "154b0c2ecab46f6d455888f0e0e8841b3641c7dcb678c2620ccbbddaad87fa33",
+            "glog-pfp-ruleFileCode/v1": "de1ca6afaf85f85bcc60472966f9181c752d192c494c44c8d5ea717621e506a3"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "f9fef2ccfc298a4c54522af0242213e466f561d56f874dbfba068ddaadd44679"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "90408b14-a210-379b-a93e-9fa7a1965540",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "views/app/products.ejs",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 49,
-                  "startColumn": 21,
-                  "endLine": 49,
-                  "endColumn": 49,
-                  "snippet": {
-                    "text": "                <td><%- output.products[i].id %></td>"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "4599dd340bf56d897d52f230329a557b79cb97e86a3f98364657481c8f35c407",
-            "glog-pfp-ruleFileCode/v1": "3123ded679437e1954d4b7f0a1acff93f7c33600ccabe1ba71a78adfc840e081"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "3123ded679437e1954d4b7f0a1acff93f7c33600ccabe1ba71a78adfc840e081"
+            "glog-fp-ruleFileCode/v1": "de1ca6afaf85f85bcc60472966f9181c752d192c494c44c8d5ea717621e506a3"
           },
           "properties": {}
         },
@@ -1784,6 +1736,41 @@
           "properties": {}
         },
         {
+          "ruleId": "31813b77-cfad-3bb8-8371-b438a70a3e1b",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unhandled Promise Rejection Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 2,
+                  "endLine": 30,
+                  "endColumn": 4,
+                  "snippet": {
+                    "text": "\tdb.sequelize.query(query, {\n\t\tmodel: db.User\n\t}).then(user => {\n\t\tif (user.length) {\n\t\t\tvar output = {\n\t\t\t\tuser: {\n\t\t\t\t\tname: user[0].name,\n\t\t\t\t\tid: user[0].id\n\t\t\t\t}\n\t\t\t}\n\t\t\tres.render('app/usersearch', {\n\t\t\t\toutput: output\n\t\t\t})\n\t\t} else {\n\t\t\treq.flash('warning', 'User not found')\n\t\t\tres.render('app/usersearch', {\n\t\t\t\toutput: null\n\t\t\t})\n\t\t}\n\t}).catch(err => {"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "c5b64d1e95afdc96ec94817996ed9fa4919913e89c2ea399839d1df707c6f6ba",
+            "glog-pfp-ruleFileCode/v1": "f9fef2ccfc298a4c54522af0242213e466f561d56f874dbfba068ddaadd44679"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "f9fef2ccfc298a4c54522af0242213e466f561d56f874dbfba068ddaadd44679"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "a46d83fc-ded8-3469-8316-e0528591d6d3",
           "kind": "fail",
           "level": "warning",
@@ -1819,37 +1806,37 @@
           "properties": {}
         },
         {
-          "ruleId": "6b3d767a-cfe7-3b6c-87d8-4ff57074985f",
+          "ruleId": "90408b14-a210-379b-a93e-9fa7a1965540",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"Command Injection Vulnerability through User Input Concatenation\""
+            "text": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "core/appHandler.js",
+                  "uri": "views/app/products.ejs",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 39,
-                  "startColumn": 2,
-                  "endLine": 44,
-                  "endColumn": 4,
+                  "startLine": 49,
+                  "startColumn": 21,
+                  "endLine": 49,
+                  "endColumn": 49,
                   "snippet": {
-                    "text": "\texec('ping -c 2 ' + req.body.address, function (err, stdout, stderr) {\n\t\toutput = stdout + stderr\n\t\tres.render('app/ping', {\n\t\t\toutput: output\n\t\t})\n\t})"
+                    "text": "                <td><%- output.products[i].id %></td>"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "c836ff7ece7e99e795ec649e9e58181c3588075e173dfdbe9ae7c1a22a4a3918",
-            "glog-pfp-ruleFileCode/v1": "b7a24f6ff425db4bbceebd025a0f58b4f690c00485f0ff5bb94f3b1368856e86"
+            "glog-pfp-ruleFileLineCode/v1": "4599dd340bf56d897d52f230329a557b79cb97e86a3f98364657481c8f35c407",
+            "glog-pfp-ruleFileCode/v1": "3123ded679437e1954d4b7f0a1acff93f7c33600ccabe1ba71a78adfc840e081"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "b7a24f6ff425db4bbceebd025a0f58b4f690c00485f0ff5bb94f3b1368856e86"
+            "glog-fp-ruleFileCode/v1": "3123ded679437e1954d4b7f0a1acff93f7c33600ccabe1ba71a78adfc840e081"
           },
           "properties": {}
         },
@@ -1889,6 +1876,41 @@
           "properties": {}
         },
         {
+          "ruleId": "6b3d767a-cfe7-3b6c-87d8-4ff57074985f",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Command Injection Vulnerability through User Input Concatenation\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 2,
+                  "endLine": 44,
+                  "endColumn": 4,
+                  "snippet": {
+                    "text": "\texec('ping -c 2 ' + req.body.address, function (err, stdout, stderr) {\n\t\toutput = stdout + stderr\n\t\tres.render('app/ping', {\n\t\t\toutput: output\n\t\t})\n\t})"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "c836ff7ece7e99e795ec649e9e58181c3588075e173dfdbe9ae7c1a22a4a3918",
+            "glog-pfp-ruleFileCode/v1": "b7a24f6ff425db4bbceebd025a0f58b4f690c00485f0ff5bb94f3b1368856e86"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "b7a24f6ff425db4bbceebd025a0f58b4f690c00485f0ff5bb94f3b1368856e86"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "45081c46-bcda-384a-96d1-9d48f46fb46a",
           "kind": "fail",
           "level": "warning",
@@ -1920,41 +1942,6 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "02e3cc1569b79b040e42aaa8412933d32fbd2ba308b25d1f1f73470405180e24"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "a8c344fb-e0b9-3bd0-beba-bc74b30a9708",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "views/app/products.ejs",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 52,
-                  "startColumn": 21,
-                  "endLine": 52,
-                  "endColumn": 51,
-                  "snippet": {
-                    "text": "                <td><%- output.products[i].tags %></td>"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "1afa7e9f36e186fd802d95bbc8636c5ae0c00de7c39a40d00e4e0c03c31b2e5d",
-            "glog-pfp-ruleFileCode/v1": "33c53a6479372986ae56ac256ea71bae7bfa25af72411647756a8b80c8f51c9a"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "33c53a6479372986ae56ac256ea71bae7bfa25af72411647756a8b80c8f51c9a"
           },
           "properties": {}
         },
@@ -1994,6 +1981,41 @@
           "properties": {}
         },
         {
+          "ruleId": "a8c344fb-e0b9-3bd0-beba-bc74b30a9708",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "EJS Template XSS Vulnerability Detected Due to Unescaped External Data"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "views/app/products.ejs",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 21,
+                  "endLine": 52,
+                  "endColumn": 51,
+                  "snippet": {
+                    "text": "                <td><%- output.products[i].tags %></td>"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "1afa7e9f36e186fd802d95bbc8636c5ae0c00de7c39a40d00e4e0c03c31b2e5d",
+            "glog-pfp-ruleFileCode/v1": "33c53a6479372986ae56ac256ea71bae7bfa25af72411647756a8b80c8f51c9a"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "33c53a6479372986ae56ac256ea71bae7bfa25af72411647756a8b80c8f51c9a"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "7e2b05b3-38c9-35ad-9929-bf922d0085db",
           "kind": "fail",
           "level": "warning",
@@ -2025,41 +2047,6 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "cbdf47c63de4f63e7b58d975a1e21b95916c9a7c45cf594cd5b37a15151329e1"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "c8d00ddc-cb2f-3386-8938-1060a8e7a487",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unhandled Promise Rejection Vulnerability"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "core/appHandler.js",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 48,
-                  "startColumn": 2,
-                  "endLine": 55,
-                  "endColumn": 4,
-                  "snippet": {
-                    "text": "\tdb.Product.findAll().then(products => {\n\t\toutput = {\n\t\t\tproducts: products\n\t\t}\n\t\tres.render('app/products', {\n\t\t\toutput: output\n\t\t})\n\t})"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "73310be0d62f3dfc78d1ff16fcb864e4b104e73b4c67aacf6850f14a716b919b",
-            "glog-pfp-ruleFileCode/v1": "f7475cc8c516f142e3f7b3bfb85bc6429b47d254afcce12486e6e00f11d42473"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "f7475cc8c516f142e3f7b3bfb85bc6429b47d254afcce12486e6e00f11d42473"
           },
           "properties": {}
         },
@@ -2099,11 +2086,46 @@
           "properties": {}
         },
         {
+          "ruleId": "c8d00ddc-cb2f-3386-8938-1060a8e7a487",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unhandled Promise Rejection Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 2,
+                  "endLine": 55,
+                  "endColumn": 4,
+                  "snippet": {
+                    "text": "\tdb.Product.findAll().then(products => {\n\t\toutput = {\n\t\t\tproducts: products\n\t\t}\n\t\tres.render('app/products', {\n\t\t\toutput: output\n\t\t})\n\t})"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "73310be0d62f3dfc78d1ff16fcb864e4b104e73b4c67aacf6850f14a716b919b",
+            "glog-pfp-ruleFileCode/v1": "f7475cc8c516f142e3f7b3bfb85bc6429b47d254afcce12486e6e00f11d42473"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "f7475cc8c516f142e3f7b3bfb85bc6429b47d254afcce12486e6e00f11d42473"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "d956d5d7-fa6d-32d3-9cd0-0b60c5231067",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "XSS Vulnerability from User-Controlled Data in HTML String"
+            "text": "Unhandled Promise Rejection Vulnerability"
           },
           "locations": [
             {
@@ -2169,41 +2191,6 @@
           "properties": {}
         },
         {
-          "ruleId": "62bc3e5d-aa43-36a8-9c56-36406f37f48a",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unselected Field Database Query Vulnerability"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "core/appHandler.js",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 107,
-                  "startColumn": 2,
-                  "endLine": 111,
-                  "endColumn": 4,
-                  "snippet": {
-                    "text": "\tdb.Product.find({\n\t\twhere: {\n\t\t\t'id': req.body.id\n\t\t}\n\t}).then(product => {"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "e539eca08d5e8acd6c37edaf7f662a137353aa82d0cebf4336ec53015204c0b4",
-            "glog-pfp-ruleFileCode/v1": "6f70bb3095b5dbdf1ab64d1eb803299e688d24b057ef355cee89cfc8ebf960a2"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "6f70bb3095b5dbdf1ab64d1eb803299e688d24b057ef355cee89cfc8ebf960a2"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "3f9d0612-751a-37dd-91b8-d38a6efa8402",
           "kind": "fail",
           "level": "warning",
@@ -2235,6 +2222,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "a6c89ad6c1d971385e6deffcc4d7e1729e59bb809993223512e2081d2789bbfa"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "62bc3e5d-aa43-36a8-9c56-36406f37f48a",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unselected Field Database Query Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 107,
+                  "startColumn": 2,
+                  "endLine": 111,
+                  "endColumn": 4,
+                  "snippet": {
+                    "text": "\tdb.Product.find({\n\t\twhere: {\n\t\t\t'id': req.body.id\n\t\t}\n\t}).then(product => {"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "e539eca08d5e8acd6c37edaf7f662a137353aa82d0cebf4336ec53015204c0b4",
+            "glog-pfp-ruleFileCode/v1": "6f70bb3095b5dbdf1ab64d1eb803299e688d24b057ef355cee89cfc8ebf960a2"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "6f70bb3095b5dbdf1ab64d1eb803299e688d24b057ef355cee89cfc8ebf960a2"
           },
           "properties": {}
         },
@@ -2628,7 +2650,7 @@
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "Unverified User Input IDOR Vulnerability"
+            "text": "Unfiltered Database Query Vulnerability"
           },
           "locations": [
             {
@@ -2834,41 +2856,6 @@
           "properties": {}
         },
         {
-          "ruleId": "073f2b99-5b1e-39a8-8ef2-1116fdbbfb79",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Potential Out-of-Destination Writing Vulnerability\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "models/index.js",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 34,
-                  "endLine": 43,
-                  "endColumn": 60,
-                  "snippet": {
-                    "text": "    var model = sequelize.import(path.join(__dirname, file));"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "179daf6e0f06b30622a34e86ea18eb4646c14c13358bca4a6f753911aacb644c",
-            "glog-pfp-ruleFileCode/v1": "91b238fda8649fde2c58a7a732138da7a9a42f28d0fa6086fbedaf4053bb0904"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "91b238fda8649fde2c58a7a732138da7a9a42f28d0fa6086fbedaf4053bb0904"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "f40d37bc-a799-33d2-976e-505fb388e17a",
           "kind": "fail",
           "level": "warning",
@@ -2904,37 +2891,37 @@
           "properties": {}
         },
         {
-          "ruleId": "9dd77efa-9225-3872-a5ca-87b17ddcb5cd",
+          "ruleId": "073f2b99-5b1e-39a8-8ef2-1116fdbbfb79",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "Direct Writing to Response Object May Lead to XSS Vulnerability"
+            "text": "\"Potential Out-of-Destination Writing Vulnerability\""
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "routes/main.js",
+                  "uri": "models/index.js",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 27,
-                  "startColumn": 5,
-                  "endLine": 27,
-                  "endColumn": 19,
+                  "startLine": 43,
+                  "startColumn": 34,
+                  "endLine": 43,
+                  "endColumn": 60,
                   "snippet": {
-                    "text": "\t\t\t\tres.send(html)"
+                    "text": "    var model = sequelize.import(path.join(__dirname, file));"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "6fbc57301235501f775fcabe1e168a32ec8faa20b2c27945a9de8280012bfb80",
-            "glog-pfp-ruleFileCode/v1": "7f0f028e32eaf21d4080d350b1fc7f637e30f78ef12b5b02d4d518b187f4fa28"
+            "glog-pfp-ruleFileLineCode/v1": "179daf6e0f06b30622a34e86ea18eb4646c14c13358bca4a6f753911aacb644c",
+            "glog-pfp-ruleFileCode/v1": "91b238fda8649fde2c58a7a732138da7a9a42f28d0fa6086fbedaf4053bb0904"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "7f0f028e32eaf21d4080d350b1fc7f637e30f78ef12b5b02d4d518b187f4fa28"
+            "glog-fp-ruleFileCode/v1": "91b238fda8649fde2c58a7a732138da7a9a42f28d0fa6086fbedaf4053bb0904"
           },
           "properties": {}
         },
@@ -2970,6 +2957,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "ee71c376aff21ac374d692dada9caf9426f950d53572a4c884b9d55f7e5f75cd"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "9dd77efa-9225-3872-a5ca-87b17ddcb5cd",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Direct Writing to Response Object May Lead to XSS Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "routes/main.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 5,
+                  "endLine": 27,
+                  "endColumn": 19,
+                  "snippet": {
+                    "text": "\t\t\t\tres.send(html)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "6fbc57301235501f775fcabe1e168a32ec8faa20b2c27945a9de8280012bfb80",
+            "glog-pfp-ruleFileCode/v1": "7f0f028e32eaf21d4080d350b1fc7f637e30f78ef12b5b02d4d518b187f4fa28"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "7f0f028e32eaf21d4080d350b1fc7f637e30f78ef12b5b02d4d518b187f4fa28"
           },
           "properties": {}
         },
