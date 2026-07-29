@@ -23,11 +23,11 @@ jobs:
         uses: ./.github/glog-action
         with:
           client: 'test'
+          evn: 'dev'
           upload: 'true'
           github-token: ${{ secrets.PAT_TOKEN }}
           glog-token: ${{ secrets.GLOG_TOKEN }}
           scl-uuid: 'aceb1da1-ab34-455b-baa1-d6d44f335fb5'
-          upload-source: 'GITHUB'
           sbom: 'true'
           on-prem-upload: 'true'
     
