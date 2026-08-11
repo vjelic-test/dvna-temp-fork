@@ -393,7 +393,7 @@
                 "markdown": ""
               },
               "fullDescription": {
-                "text": "Admin route lacks an explicit authorization check. Ensure admin/role-based checks are enforced for privileged endpoints."
+                "text": "POST route with auth middleware but no CSRF protection detected. Add CSRF validation (e.g., csurf) for state-changing forms."
               },
               "defaultConfiguration": {
                 "enabled": true,
@@ -2184,12 +2184,8 @@
               }
             }
           ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "71988d740288454fffa38ee32d56f64802a49cfa88a263162a0cfef3c1fec1cb",
-            "glog-pfp-ruleFileCode/v1": "58f5765be8c99f787b35f01a3afc62f1361abf495e7c74b02d8ce84e2af5e77b"
-          },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "58f5765be8c99f787b35f01a3afc62f1361abf495e7c74b02d8ce84e2af5e77b"
+            "matchBasedId/v1": "5cc0c54c78b2e33a4819e7ef3cbb30f3dc5e7b3cf02caa09a674796c17b1e5445e5700d07c2d04ba9df5d9d0543ce6705265feae60711f45cb00bcad1870e12b_0"
           }
         },
         {
