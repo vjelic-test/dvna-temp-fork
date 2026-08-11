@@ -285,17 +285,17 @@
             },
             {
               "id": "GL-SEC-A62B724AB070",
-              "name": "Unescaped EJS Output Allows XSS Attacks",
+              "name": "Explicit Unescape In EJS Template",
               "shortDescription": {
                 "text": "",
                 "markdown": ""
               },
               "fullDescription": {
-                "text": "The application redirects to a URL specified by user-supplied input `$REQ` that is not validated. This could redirect users to malicious locations. Consider using an allow-list approach to validate URLs, or warn users they are being redirected to a third-party website."
+                "text": "Vulnerable serialization library detected. node-serialize is known to allow arbitrary code execution. Use JSON.stringify/parse instead."
               },
               "defaultConfiguration": {
                 "enabled": true,
-                "level": "warning"
+                "level": "error"
               },
               "helpUri": "https://www.glog.ai/",
               "help": {
@@ -1356,8 +1356,12 @@
               }
             }
           ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "ede2fb56dfb345e5b7bb2069cb161a2121ac2621112090d593b23532c123d10d",
+            "glog-pfp-ruleFileCode/v1": "1f07f0e007f61a57455ac9c08577eacd284eeac638d379d85b22941d14aac386"
+          },
           "fingerprints": {
-            "matchBasedId/v1": "a5c9ff70bc7bc6fad3f6e6f8b14143816d87d708b8a71b8690392d3fd0c17b1d18270294e3d5f263ed6932aca02b1d8cef68272c5f2b039ca190b31c06134d67_0"
+            "glog-fp-ruleFileCode/v1": "1f07f0e007f61a57455ac9c08577eacd284eeac638d379d85b22941d14aac386"
           }
         },
         {
