@@ -2,6 +2,10 @@ name: Glog Scan (dev)
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: read
+
 jobs:
   glog-scan:
     runs-on: ubuntu-latest
@@ -23,8 +27,14 @@ jobs:
         uses: ./.github/glog-action
         with:
           client: 'test'
-          upload: 'true'
           github-token: ${{ secrets.PAT_TOKEN }}
           glog-token: ${{ secrets.GLOG_TOKEN }}
+          upload: 'false'
+          on-prem-upload: 'true'
+          issue: 'false'
+          autofix: 'false'
+          sarif-format-type: 'STANDARD'
+          sbom: 'true'
           env: 'dev'
-    
+          scl-uuid: 'aceb1da1-ab34-455b-baa1-d6d44f335fb5'
+
