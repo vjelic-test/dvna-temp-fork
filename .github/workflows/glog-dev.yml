@@ -37,5 +37,4 @@ jobs:
           sbom: 'true'
           env: 'dev'
           scl-uuid: 'aceb1da1-ab34-455b-baa1-d6d44f335fb5'
-          dev: 'true'
 
