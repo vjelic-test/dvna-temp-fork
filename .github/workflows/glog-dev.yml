@@ -29,11 +29,12 @@ jobs:
           client: 'test'
           github-token: ${{ secrets.PAT_TOKEN }}
           glog-token: ${{ secrets.GLOG_TOKEN }}
-          upload: 'false'
+          upload: 'true'
           on-prem-upload: 'true'
-          issue: 'false'
+          issue: 'true'
           autofix: 'false'
-          sarif-format-type: 'STANDARD'
+          sarif-format-type: 'GITHUB'
+          server-sarif-format-type: 'STANDARD'
           sbom: 'true'
           env: 'dev'
           scl-uuid: 'aceb1da1-ab34-455b-baa1-d6d44f335fb5'
