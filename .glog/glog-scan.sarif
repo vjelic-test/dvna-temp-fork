@@ -285,17 +285,17 @@
             },
             {
               "id": "GL-SEC-A62B724AB070",
-              "name": "Explicit Unescape In EJS Template",
+              "name": "Unescaped EJS Output Allows XSS Attacks",
               "shortDescription": {
                 "text": "",
                 "markdown": ""
               },
               "fullDescription": {
-                "text": "Vulnerable serialization library detected. node-serialize is known to allow arbitrary code execution. Use JSON.stringify/parse instead."
+                "text": "The application redirects to a URL specified by user-supplied input `$REQ` that is not validated. This could redirect users to malicious locations. Consider using an allow-list approach to validate URLs, or warn users they are being redirected to a third-party website."
               },
               "defaultConfiguration": {
                 "enabled": true,
-                "level": "error"
+                "level": "warning"
               },
               "helpUri": "https://www.glog.ai/",
               "help": {
@@ -393,7 +393,7 @@
                 "markdown": ""
               },
               "fullDescription": {
-                "text": "POST route with auth middleware but no CSRF protection detected. Add CSRF validation (e.g., csurf) for state-changing forms."
+                "text": "Admin route lacks an explicit authorization check. Ensure admin/role-based checks are enforced for privileged endpoints."
               },
               "defaultConfiguration": {
                 "enabled": true,
@@ -2184,8 +2184,12 @@
               }
             }
           ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "71988d740288454fffa38ee32d56f64802a49cfa88a263162a0cfef3c1fec1cb",
+            "glog-pfp-ruleFileCode/v1": "58f5765be8c99f787b35f01a3afc62f1361abf495e7c74b02d8ce84e2af5e77b"
+          },
           "fingerprints": {
-            "matchBasedId/v1": "5cc0c54c78b2e33a4819e7ef3cbb30f3dc5e7b3cf02caa09a674796c17b1e5445e5700d07c2d04ba9df5d9d0543ce6705265feae60711f45cb00bcad1870e12b_0"
+            "glog-fp-ruleFileCode/v1": "58f5765be8c99f787b35f01a3afc62f1361abf495e7c74b02d8ce84e2af5e77b"
           }
         },
         {
